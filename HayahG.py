@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2 import service_account
 import base64
 from io import BytesIO
 
@@ -9,14 +9,17 @@ from io import BytesIO
 if 'page' not in st.session_state:
     st.session_state.page = "main"
 
-# تحديد نطاق الوصول إلى Google Sheets API
-scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/drive']
-
-# إنشاء بيانات الاعتماد من Streamlit Secrets
-creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["gcp_service_account"], scope)
+# إعداد بيانات الاعتماد من Streamlit Secrets
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/drive"
+    ],
+)
 
 # تفويض بيانات الاعتماد
-client = gspread.authorize(creds)
+client = gspread.authorize(credentials)
 
 # تعريف دالة لعرض الشعار
 def add_logo():
