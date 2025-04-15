@@ -1,16 +1,23 @@
 import streamlit as st
 import pandas as pd
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2 import service_account
 
-# تحديد نطاق الوصول إلى Google Sheets API
-scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/drive']
+# تهيئة الصفحة
+if 'page' not in st.session_state:
+    st.session_state.page = "main"
 
-# إنشاء بيانات الاعتماد من ملف credential.json
-creds = ServiceAccountCredentials.from_json_keyfile_name('credential.json', scope)
+# إعداد بيانات الاعتماد من Streamlit Secrets
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/drive"
+    ],
+)
 
 # تفويض بيانات الاعتماد
-client = gspread.authorize(creds)
+client = gspread.authorize(credentials)
 
 try:
     # فتح ورقة العمل باستخدام المعرف
