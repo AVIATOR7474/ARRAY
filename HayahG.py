@@ -49,8 +49,11 @@ def set_custom_style():
         """
         <style>
         .main {
-            background-color: #f5f5f5;
+            background-color: #FFAE42; /* لون Yellow Orange */
             padding: 20px;
+        }
+        .stApp {
+            background-color: #FFAE42; /* لون Yellow Orange */
         }
         h1 {
             color: #8B6B23;
