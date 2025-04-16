@@ -32,12 +32,13 @@ def add_logo():
             margin-bottom: 20px;
         }
         .logo-img {
-            max-width: 300px;
+            max-width: 150px; /* تصغير الشعار إلى النصف (كان 300px) */
             margin: 0 auto;
+            background-color: transparent !important; /* جعل خلفية الشعار شفافة */
         }
         </style>
         <div class="logo-container">
-            <img class="logo-img" src="https://raw.githubusercontent.com/AVIATOR7474/ARRAY/main/logo.jpg">
+            <img class="logo-img" src="https://raw.githubusercontent.com/AVIATOR7474/ARRAY/main/logo.png">
         </div>
         """,
         unsafe_allow_html=True
